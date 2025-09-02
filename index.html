@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidra Friends</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: #0f0c29;
+            color: white;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Static Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+        }
+        
+        /* Content Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Header with button */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #ffe66d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Magic Night Button */
+        .magic-btn {
+            position: relative;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(45deg, #1a237e, #4a148c);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        
+        /* Starry Night Button Animation */
+        .magic-btn.active {
+            animation: starryPulse 1.5s ease-in-out;
+        }
+        
+        @keyframes starryPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+            25% {
+                transform: scale(1.1);
+                box-shadow: 0 0 25px rgba(78, 205, 196, 0.8);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 35px rgba(255, 195, 113, 0.8);
+            }
+            75% {
+                transform: scale(1.1);
+                box-shadow: 0 0 25px rgba(196, 113, 237, 0.8);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+        }
+        
+        /* Glowing aura for Starry Night Button */
+        .magic-btn::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.3) 0%, rgba(255, 195, 113, 0.3) 50%, rgba(196, 113, 237, 0.3) 100%);
+            border-radius: 60px;
+            opacity: 0;
+            z-index: -1;
+        }
+        
+        .magic-btn.active::after {
+            animation: starryGlow 1.5s ease-in-out;
+        }
+        
+        @keyframes starryGlow {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.4);
+            }
+        }
+        
+        p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* Image Container */
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            margin: 2rem 0;
+            max-width: 100%;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.8rem;
+            font-size: 0.9rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container:hover .image-caption {
+            transform: translateY(0);
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #ff5252, #3db8b3);
+        }
+        
+        /* Resume Button */
+        .resume-btn {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border: none;
+        }
+        
+        .resume-btn:hover {
+            background: linear-gradient(45deg, #5a0dbb, #1e65eb);
+        }
+        
+        /* Resume Page Styles */
+        .resume-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .resume-page.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .login-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            position: relative;
+        }
+        
+        .login-title {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #ffe66d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: #4ecdc4;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .form-group input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(78, 205, 196, 0.7);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 1rem;
+        }
+        
+        .login-btn:hover {
+            background: linear-gradient(45deg, #ff5252, #3db8b3);
+        }
+        
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(45deg, #ff5252, #3db8b3);
+        }
+        
+        .back-btn::before {
+            content: "←";
+            font-size: 1.2rem;
+        }
+        
+        /* Result Page Styles */
+        .result-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .result-page.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .result-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            position: relative;
+        }
+        
+        .result-title {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #ffe66d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 2rem;
+        }
+        
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .student-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .student-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .pass {
+            background: rgba(78, 205, 196, 0.3);
+            color: #4ecdc4;
+        }
+        
+        .fail {
+            background: rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+        }
+        
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        
+        .result-table th, .result-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .result-table th {
+            color: #4ecdc4;
+            font-weight: 600;
+        }
+        
+        .result-summary {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+        }
+        
+        .summary-item {
+            text-align: center;
+        }
+        
+        .summary-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .magic-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .glass-card {
+                padding: 2rem;
+            }
+            
+            .login-form {
+                padding: 2rem;
+            }
+            
+            .back-btn {
+                top: 15px;
+                right: 15px;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .result-card {
+                padding: 2rem;
+            }
+            
+            .student-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .result-summary {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Main Content -->
+    <div class="container" id="mainContent">
+        <div class="glass-card">
+            <div class="header-container">
+                <h1>Sidra Friends</h1>
+                <button class="magic-btn" id="magicBtn">Starry Night</button>
+            </div>
+            <p>A moment captured during a traditional community event in a rural setting.</p>
+            
+            <div class="image-container">
+                <img src="https://z-cdn-media.chatglm.cn/files/c2cea164-f1d7-4276-b29f-a9b842b943d3_pasted_image_1756540163176.png?auth_key=1788076177-480279a6f1a94e62a9d8ba8a3c91e81a-0-6e9a9d1d42fbbbe55bc6cee5cee70a3b" alt="Community gathering in traditional attire">
+                <div class="image-caption">Traditional community gathering in rural setting</div>
+            </div>
+            
+            <div class="btn-container">
+                <a href="#" class="btn resume-btn" id="resumeBtn">Login</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Login Page -->
+    <div class="resume-page" id="resumePage">
+        <div class="login-form">
+            <button class="back-btn" id="backBtn">Back</button>
+            <h1 class="login-title">Login</h1>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button class="login-btn" id="loginBtn">Login</button>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+    
+    <!-- Result Page -->
+    <div class="result-page" id="resultPage">
+        <div class="result-card">
+            <button class="back-btn" id="backToLoginBtn">Back</button>
+            <h1 class="result-title">Student Result</h1>
+            
+            <div class="student-info">
+                <div class="student-name" id="studentName"></div>
+                <div class="student-status" id="studentStatus"></div>
+            </div>
+            
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>English</td>
+                        <td id="englishMarks"></td>
+                    </tr>
+                    <tr>
+                        <td>Arabic</td>
+                        <td id="arabicMarks"></td>
+                    </tr>
+                    <tr>
+                        <td>Maths</td>
+                        <td id="mathsMarks"></td>
+                    </tr>
+                    <tr>
+                        <td>Hindi</td>
+                        <td id="hindiMarks"></td>
+                    </tr>
+                    <tr>
+                        <td>Social</td>
+                        <td id="socialMarks"></td>
+                    </tr>
+                    <tr>
+                        <td>Science</td>
+                        <td id="scienceMarks"></td>
+                    </tr>
+                    <tr>
+                        <td>Urdu</td>
+                        <td id="urduMarks"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="result-summary">
+                <div class="summary-item">
+                    <div class="summary-value" id="totalMarks"></div>
+                    <div class="summary-label">Total Marks</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value" id="studentRank"></div>
+                    <div class="summary-label">Rank</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value" id="studentPercentage"></div>
+                    <div class="summary-label">Percentage</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Student data from Excel file
+        const students = [
+            {
+                username: "raza",
+                password: "u1590",
+                marks: {
+                    english: 45,
+                    arabic: 89,
+                    maths: 67,
+                    hindi: 67,
+                    social: 40,
+                    science: 44,
+                    urdu: 54
+                }
+            },
+            {
+                username: "affan",
+                password: "u15891",
+                marks: {
+                    english: 100,
+                    arabic: 100,
+                    maths: 100,
+                    hindi: 100,
+                    social: 100,
+                    science: 100,
+                    urdu: 100
+                }
+            },
+            {
+                username: "noor",
+                password: "u1583",
+                marks: {
+                    english: 54,
+                    arabic: 54,
+                    maths: 67,
+                    hindi: 87,
+                    social: 43,
+                    science: 65,
+                    urdu: 78
+                }
+            },
+            {
+                username: "muhmmed",
+                password: "u1584",
+                marks: {
+                    english: 78,
+                    arabic: 66,
+                    maths: 65,
+                    hindi: 54,
+                    social: 54,
+                    science: 65,
+                    urdu: 76
+                }
+            },
+            {
+                username: "atif",
+                password: "u1585",
+                marks: {
+                    english: 67,
+                    arabic: 22,
+                    maths: 65,
+                    hindi: 78,
+                    social: 23,
+                    science: 65,
+                    urdu: 56
+                }
+            },
+            {
+                username: "ahyan",
+                password: "u1586",
+                marks: {
+                    english: 76,
+                    arabic: 66,
+                    maths: 34,
+                    hindi: 45,
+                    social: 21,
+                    science: 23,
+                    urdu: 76
+                }
+            },
+            {
+                username: "faizan",
+                password: "u1587",
+                marks: {
+                    english: 76,
+                    arabic: 55,
+                    maths: 56,
+                    hindi: 43,
+                    social: 45,
+                    science: 34,
+                    urdu: 34
+                }
+            },
+            {
+                username: "tahaseen",
+                password: "u1588",
+                marks: {
+                    english: 54,
+                    arabic: 76,
+                    maths: 78,
+                    hindi: 98,
+                    social: 34,
+                    science: 56,
+                    urdu: 23
+                }
+            },
+            {
+                username: "kaif",
+                password: "u1589",
+                marks: {
+                    english: 56,
+                    arabic: 76,
+                    maths: 43,
+                    hindi: 65,
+                    social: 98,
+                    science: 76,
+                    urdu: 67
+                }
+            },
+            {
+                username: "zeeshan",
+                password: "u1582",
+                marks: {
+                    english: 76,
+                    arabic: 76,
+                    maths: 43,
+                    hindi: 65,
+                    social: 89,
+                    science: 54,
+                    urdu: 98
+                }
+            }
+        ];
+        
+        // Calculate total, percentage, pass/fail, and rank for each student
+        students.forEach(student => {
+            const marks = student.marks;
+            student.total = marks.english + marks.arabic + marks.maths + marks.hindi + marks.social + marks.science + marks.urdu;
+            student.percentage = (student.total / 700 * 100).toFixed(2);
+            
+            // Check if student passed (all subjects >= 40)
+            const minMark = Math.min(...Object.values(marks));
+            student.pass = minMark >= 40;
+            
+            // Calculate rank
+            student.rank = 1;
+            students.forEach(otherStudent => {
+                if (otherStudent !== student && otherStudent.total > student.total) {
+                    student.rank++;
+                }
+            });
+        });
+        
+        // Magic Button - Starry Night Animation Only
+        const magicBtn = document.getElementById('magicBtn');
+        
+        magicBtn.addEventListener('click', function(e) {
+            // Add active class for button animation
+            this.classList.add('active');
+            
+            // Remove active class after animation completes
+            setTimeout(() => {
+                this.classList.remove('active');
+            }, 1500);
+        });
+        
+        // Login Button Functionality
+        const resumeBtn = document.getElementById('resumeBtn');
+        const resumePage = document.getElementById('resumePage');
+        const resultPage = document.getElementById('resultPage');
+        const loginBtn = document.getElementById('loginBtn');
+        const backBtn = document.getElementById('backBtn');
+        const backToLoginBtn = document.getElementById('backToLoginBtn');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('errorMessage');
+        const mainContent = document.getElementById('mainContent');
+        const loginForm = document.querySelector('.login-form');
+        
+        resumeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Show login page
+            resumePage.classList.add('active');
+            mainContent.style.display = 'none';
+            usernameInput.focus();
+        });
+        
+        // Function to close login page
+        function closeLoginPage() {
+            resumePage.classList.remove('active');
+            mainContent.style.display = 'flex';
+            
+            // Clear form
+            usernameInput.value = '';
+            passwordInput.value = '';
+            errorMessage.textContent = '';
+            
+            // Reset any error states
+            usernameInput.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            usernameInput.placeholder = 'Enter your username';
+            passwordInput.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            passwordInput.placeholder = 'Enter your password';
+        }
+        
+        // Back Button Functionality
+        backBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeLoginPage();
+        });
+        
+        // Back to Login Button from Result Page
+        backToLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            resultPage.classList.remove('active');
+            resumePage.classList.add('active');
+            usernameInput.focus();
+        });
+        
+        // Click outside to close functionality
+        resumePage.addEventListener('click', function(e) {
+            // Check if click is outside the login form
+            if (!loginForm.contains(e.target)) {
+                closeLoginPage();
+            }
+        });
+        
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get username and password
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            // Simple validation
+            if (!username || !password) {
+                errorMessage.textContent = 'Username and password are required';
+                return;
+            }
+            
+            // Find student with matching username and password
+            const student = students.find(s => s.username === username && s.password === password);
+            
+            if (student) {
+                // Hide login page and show result page
+                resumePage.classList.remove('active');
+                resultPage.classList.add('active');
+                
+                // Display student information
+                document.getElementById('studentName').textContent = student.username;
+                document.getElementById('englishMarks').textContent = student.marks.english;
+                document.getElementById('arabicMarks').textContent = student.marks.arabic;
+                document.getElementById('mathsMarks').textContent = student.marks.maths;
+                document.getElementById('hindiMarks').textContent = student.marks.hindi;
+                document.getElementById('socialMarks').textContent = student.marks.social;
+                document.getElementById('scienceMarks').textContent = student.marks.science;
+                document.getElementById('urduMarks').textContent = student.marks.urdu;
+                document.getElementById('totalMarks').textContent = student.total;
+                document.getElementById('studentRank').textContent = student.rank;
+                document.getElementById('studentPercentage').textContent = student.percentage + '%';
+                
+                // Set pass/fail status
+                const statusElement = document.getElementById('studentStatus');
+                if (student.pass) {
+                    statusElement.textContent = 'Pass';
+                    statusElement.className = 'student-status pass';
+                } else {
+                    statusElement.textContent = 'Fail';
+                    statusElement.className = 'student-status fail';
+                }
+            } else {
+                // Show error message
+                errorMessage.textContent = 'Invalid username or password';
+            }
+        });
+    </script>
+</body>
+</html>
